@@ -2,26 +2,40 @@ package goban
 
 import (
     "github.com/garyburd/redigo/redis"
-    "flag"
+    "os"
+    "encoding/json"
 )
 
 var redisPool *redis.Pool
+var config Config
 
-var (
-    redisAddress = flag.String("redis-address", ":6379", "Address to the Redis server")
-    maxConnections = flag.Int("max-connections", 10, "Max connections to Redis")
-)
+type Config struct {
+    Server string
+    Maxconnection int
+}
+
+func Setup(conffilepath string) {
+    file,err := os.Open(conffilepath)
+    if  err != nil {
+        panic(err)
+    }
+    decoder := json.NewDecoder(file)
+    config = Config{}
+    err = decoder.Decode(&config)
+    if  err != nil {
+        panic(err)
+    }
+}
 
 func start() {
-    flag.Parse()
     redisPool = redis.NewPool(func() (redis.Conn, error) {
-        c, err := redis.Dial("tcp", *redisAddress)
+        c, err := redis.Dial("tcp", config.Server)
         if err != nil {
             return nil, err
         }
 
         return c, err
-    }, *maxConnections)
+    }, config.Maxconnection)
 }
 
 func getConn() redis.Conn {
