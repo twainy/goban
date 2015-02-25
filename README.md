@@ -1,11 +1,14 @@
-Goban is data store
+Goban
 ======
-Goban is a tool for data access by declarative programming.
+Goban is a multi-use data accessor for declarative programming.
+
+This can use RDB(MySQL) and KVS(memcached, Redis, dynamodb)
 
 Supported DataStore
 -----
 - MySQL(use mymysql)
 - Redis(use goredis)
+- DynamoDB
 
 Example
 ----
