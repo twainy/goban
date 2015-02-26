@@ -47,6 +47,11 @@ func getConn() redis.Conn {
     return c
 }
 
+func Delete(key string) (error) {
+    c := getConn()
+    _,err := c.Do("DELETE", key)
+    return err
+}
 func Get(key string) (string, error) {
     c := getConn()
     v,err := redis.String(c.Do("GET", key))
@@ -58,3 +63,14 @@ func Set(key string, value string) error {
     _,err := c.Do("SET", key, value)
     return err
 }
+func Zadd(key string, value int, name string) error {
+    c := getConn()
+    _,err := c.Do("ZADD", key, value, name)
+    return err
+}
+func Zrevrank(key string, name string) (int,error) {
+    c := getConn()
+    val,err := redis.Int(c.Do("ZREVRANK", key, name))
+    return val,err
+}
+
