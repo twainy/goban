@@ -1,0 +1,11 @@
+language: go
+
+go:
+  - 1.4
+  - tip
+
+services:
+  - redis-server
+  
+install:
+  - go get github.com/garyburd/redigo/redis
