@@ -73,4 +73,14 @@ func Zrevrank(key string, name string) (int,error) {
     val,err := redis.Int(c.Do("ZREVRANK", key, name))
     return val,err
 }
+func Zscore(key string, name string) (int,error) {
+    c := getConn()
+    value,err := redis.Int(c.Do("ZSCORE", key, name))
+    return value,err
+}
+func Zcount(key string, min string, max string) (int,error) {
+    c := getConn()
+    value,err := redis.Int(c.Do("ZCOUNT", key, min, max))
+    return value,err
+}
 
