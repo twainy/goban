@@ -63,6 +63,11 @@ func Set(key string, value string) error {
     _,err := c.Do("SET", key, value)
     return err
 }
+func Setex(key string, expire_sec int, value string) error {
+    c := getConn()
+    _,err := c.Do("SETEX", key, expire_sec, value)
+    return err
+}
 func Zadd(key string, value int, name string) error {
     c := getConn()
     _,err := c.Do("ZADD", key, value, name)
